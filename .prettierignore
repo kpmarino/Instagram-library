@@ -1,0 +1,7 @@
+node_modules
+dist
+.tanstack
+.output
+src/routeTree.gen.ts
+src/db/migrations
+package-lock.json
