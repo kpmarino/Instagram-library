@@ -9,6 +9,7 @@ const skipped = new Set([
   '.worktrees',
   '.tanstack',
   '.output',
+  '.local-tools',
 ])
 async function collect(dir) {
   const result = []

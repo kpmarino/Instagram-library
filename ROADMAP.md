@@ -6,7 +6,7 @@ TanStack Start foundation, source-independent schema, pgvector migration and aut
 
 ## Current
 
-Consolidate cloud planning and adopt documentation-hub layout and validation.
+Verify the real local PostgreSQL/API path, configure CI, and provide local test commands. Documentation and foundation are merged in PR #1.
 
 ## Next
 

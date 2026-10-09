@@ -11,12 +11,17 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx scripts/migrate.ts",
+    "db:migrate": "node --env-file-if-exists=.env --import tsx scripts/migrate.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "docs:lint": "markdownlint \"**/*.md\" \".cursor/rules/*.mdc\" --ignore node_modules --ignore dist --dot",
+    "docs:lint": "markdownlint \"**/*.md\" \".cursor/rules/*.mdc\" --ignore node_modules --ignore dist --dot --ignore .local-tools",
     "docs:links": "node scripts/check-doc-links.mjs",
-    "docs:check": "npm run docs:lint && npm run docs:links"
+    "docs:check": "npm run docs:lint && npm run docs:links",
+    "local:setup": "node scripts/setup-local.mjs",
+    "db:up": "docker compose -p instagram-library up -d --wait",
+    "db:stop": "docker compose -p instagram-library stop",
+    "smoke:local": "node --env-file-if-exists=.env --import tsx scripts/smoke-local.ts",
+    "runtime:start": "node scripts/start-runtime.mjs"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.170.41",
