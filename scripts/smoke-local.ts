@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict'
 import { randomUUID } from 'node:crypto'
+import { createHash } from 'node:crypto'
+import { hashPassword } from '../src/services/auth/password.server'
 import { spawn } from 'node:child_process'
 import { setTimeout as delay } from 'node:timers/promises'
 import { Pool } from 'pg'
@@ -16,6 +18,8 @@ const db = drizzle(pool)
 const canonicalUrl = `https://example.org/library-smoke/${randomUUID()}`
 let server: ReturnType<typeof spawn> | undefined
 let serverExited: Promise<void> | undefined
+let sessionHash: string | undefined
+const smokePassword = randomUUID()
 try {
   // Exercise real node-postgres migrations, including repeat application.
   await migrate(db, { migrationsFolder: './src/db/migrations' })
@@ -37,7 +41,10 @@ try {
       String(port),
       '--strictPort',
     ],
-    { env: process.env, stdio: 'ignore' },
+    {
+      env: { ...process.env, OWNER_PASSWORD_HASH: hashPassword(smokePassword) },
+      stdio: 'ignore',
+    },
   )
   serverExited = new Promise((resolve) => server!.once('exit', () => resolve()))
   const base = `http://127.0.0.1:${port}`
@@ -98,6 +105,65 @@ try {
   console.log(
     'Live API auth, validation, persistence and duplicate preservation verified.',
   )
+  let cookie = ''
+  const library = (body?: unknown, origin = base) =>
+    fetch(`${base}/api/library`, {
+      method: body ? 'POST' : 'GET',
+      headers: {
+        cookie,
+        ...(body ? { 'content-type': 'application/json', origin } : {}),
+      },
+      body: body ? JSON.stringify(body) : undefined,
+      signal: AbortSignal.timeout(10000),
+    })
+  assert.equal((await library()).status, 401)
+  assert.equal(
+    (
+      await library(
+        { action: 'login', password: smokePassword },
+        'https://evil.example',
+      )
+    ).status,
+    403,
+  )
+  const login = await library({ action: 'login', password: smokePassword })
+  assert.equal(login.status, 200)
+  cookie = login.headers.get('set-cookie')!.split(';')[0]
+  sessionHash = createHash('sha256').update(cookie.split('=')[1]).digest('hex')
+  assert.equal((await library()).status, 200)
+  assert.equal(
+    (
+      await library({
+        action: 'edit',
+        input: {
+          id: created.item.id,
+          title: 'Edited smoke title',
+          notes: 'Edited smoke notes',
+        },
+      })
+    ).status,
+    200,
+  )
+  assert.equal(
+    (
+      await library({
+        action: 'capture',
+        input: { url: canonicalUrl, notes: 'Overwrite attempt' },
+      })
+    ).status,
+    200,
+  )
+  const edited = await pool.query(
+    'SELECT title, notes FROM saved_items WHERE id = $1',
+    [created.item.id],
+  )
+  assert.equal(edited.rows[0].notes, 'Edited smoke notes')
+  assert.equal(edited.rows[0].title, 'Edited smoke title')
+  assert.equal((await library({ action: 'logout' })).status, 200)
+  assert.equal((await library()).status, 401)
+  console.log(
+    'Live browser-session authentication, CSRF protection, edits, duplicate preservation and logout verified.',
+  )
 } finally {
   if (server && server.exitCode === null) {
     server.kill('SIGTERM')
@@ -105,6 +171,10 @@ try {
     if (server.exitCode === null) server.kill('SIGKILL')
   }
   try {
+    if (sessionHash)
+      await pool.query('DELETE FROM owner_sessions WHERE token_hash = $1', [
+        sessionHash,
+      ])
     await pool.query('DELETE FROM saved_items WHERE canonical_url = $1', [
       canonicalUrl,
     ])

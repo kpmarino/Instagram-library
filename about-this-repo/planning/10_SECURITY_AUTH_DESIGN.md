@@ -3,11 +3,11 @@
 **Project:** Instagram Library
 **Owner:** Kevin
 **Status:** Draft
-**Last Updated:** 2026-10-08
+**Last Updated:** 2026-10-09
 
 ## Role of Authentication
 
-Private personal archive. Current authentication gates external ingestion only; it is not a browser login system.
+Private personal archive. External ingestion uses a bearer token; the browser library uses opaque owner sessions.
 
 ## Identity Provider
 
@@ -15,11 +15,11 @@ Undecided. App identity is separate from Instagram authorization. Do not adopt a
 
 ## Authentication Modes
 
-Current: server environment bearer token. Planned: authenticated browser session and manageable per-client capture tokens. No token is exposed through `VITE_` variables.
+Current: server environment bearer token and authenticated owner browser sessions. Planned: manageable per-client capture tokens. No token is exposed through `VITE_` variables.
 
 ## Authentication Middleware
 
-HTTP boundary rejects missing/wrong token before persistence. Future app-internal mutations need session enforcement and CSRF protection.
+HTTP boundary rejects missing/wrong token before persistence. Browser mutations enforce session authorization and matching Origin, including CSRF protection on login.
 
 ## User Model and Permissions
 
@@ -39,7 +39,7 @@ No upstream Instagram/S3/AI credentials configured. Store future secrets server-
 
 ## Database Schema
 
-Auth/session/token tables pending provider and lifecycle decision.
+owner_sessions stores token digests and seven-day expiry. See [Owner Session ADR](ADR-005-owner-session-and-shadcn.md) and [Browser Library Reference](../../docs/reference/reference-browser-library.md). Capture-token tables remain planned.
 
 ## Security Decisions
 

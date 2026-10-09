@@ -6,11 +6,11 @@ TanStack Start foundation, source-independent schema, pgvector migration and aut
 
 ## Current
 
-Verify the real local PostgreSQL/API path, configure CI, and provide local test commands. Documentation and foundation are merged in PR #1.
+Real PostgreSQL/API verification, CI, private owner sessions and the shadcn/ui save/browse/edit workflow are implemented for review. Documentation and foundation are merged in PR #1.
 
 ## Next
 
-Real database/runtime verification and session login, then tablet library/detail/capture. Follow with PWA/Shortcut/import, media queue/S3 and portable export/restore.
+Physical-device acceptance and production authentication/runtime hardening. Follow with PWA/Shortcut/import, media queue/S3 and portable export/restore.
 
 ## Later
 

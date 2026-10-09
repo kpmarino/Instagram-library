@@ -121,3 +121,9 @@ export const itemMetadata = pgTable(
   ],
 )
 export type SavedItem = typeof savedItems.$inferSelect
+
+export const ownerSessions = pgTable('owner_sessions', {
+  tokenHash: text('token_hash').primaryKey(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+  createdAt: createdAt(),
+})

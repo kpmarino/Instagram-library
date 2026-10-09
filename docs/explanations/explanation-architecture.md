@@ -28,3 +28,7 @@ The initial deployment model is single user. A server-side ingestion token gates
 `Tag` and `Collection` have many-to-many joins to items. `ItemMetadata` contains a JSONB value, key, timestamp and provenance (`user`, `imported`, `instagram`, `ai`). Enrichment should add provenance-bearing metadata and must not silently overwrite user fields. Foreign keys cascade item-owned records; deleting a database row does not delete archived objects. Object cleanup requires an explicit future policy.
 
 pgvector is enabled by the initial migration. No model-specific embedding dimension is frozen before selecting an enrichment provider. Semantic indexes and full-text search arrive with search implementation.
+
+## Browser Library
+
+Session and origin checks gate the internal library endpoint. Route files delegate to server services; list/edit query logic stays outside routing. The browser receives only list fields, never password hashes, session digests or ingestion credentials. The official shadcn/ui Base UI Nova components are the default UI system. See [Browser Library Reference](../reference/reference-browser-library.md).

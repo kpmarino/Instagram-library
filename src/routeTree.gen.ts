@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiLibraryRouteImport } from './routes/api.library'
 import { Route as ApiV1ItemsRouteImport } from './routes/api.v1.items'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiLibraryRoute = ApiLibraryRouteImport.update({
+  id: '/api/library',
+  path: '/api/library',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiV1ItemsRoute = ApiV1ItemsRouteImport.update({
@@ -25,27 +31,31 @@ const ApiV1ItemsRoute = ApiV1ItemsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/library': typeof ApiLibraryRoute
   '/api/v1/items': typeof ApiV1ItemsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/library': typeof ApiLibraryRoute
   '/api/v1/items': typeof ApiV1ItemsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/library': typeof ApiLibraryRoute
   '/api/v1/items': typeof ApiV1ItemsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/v1/items'
+  fullPaths: '/' | '/api/library' | '/api/v1/items'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/v1/items'
-  id: '__root__' | '/' | '/api/v1/items'
+  to: '/' | '/api/library' | '/api/v1/items'
+  id: '__root__' | '/' | '/api/library' | '/api/v1/items'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiLibraryRoute: typeof ApiLibraryRoute
   ApiV1ItemsRoute: typeof ApiV1ItemsRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/library': {
+      id: '/api/library'
+      path: '/api/library'
+      fullPath: '/api/library'
+      preLoaderRoute: typeof ApiLibraryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/v1/items': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiLibraryRoute: ApiLibraryRoute,
   ApiV1ItemsRoute: ApiV1ItemsRoute,
 }
 export const routeTree = rootRouteImport
