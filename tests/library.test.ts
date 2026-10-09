@@ -198,6 +198,54 @@ it('paginates results deterministically', async () => {
       .size,
   ).toBe(27)
 })
+it('bulk capture enforces auth/origin and preserves metadata on canonical duplicates', async () => {
+  const text =
+    'https://instagram.com/p/UI123/?igsh=batch\n- https://example.org/bulk-new\nhttps://example.org/bulk-new\ninvalid'
+  expect(
+    (await handle(request({ action: 'bulk-capture', text }, { cookie: '' })))
+      .status,
+  ).toBe(401)
+  expect(
+    (
+      await handle(
+        request(
+          { action: 'bulk-capture', text },
+          { origin: 'https://evil.example' },
+        ),
+      )
+    ).status,
+  ).toBe(403)
+  const response = await handle(request({ action: 'bulk-capture', text }))
+  expect(response.status).toBe(200)
+  const body = await response.json()
+  expect(body.counts).toEqual({ saved: 1, duplicate: 2, invalid: 1, failed: 0 })
+  const [kept] = await db
+    .select()
+    .from(schema.savedItems)
+    .where(
+      eq(schema.savedItems.canonicalUrl, 'https://www.instagram.com/p/UI123/'),
+    )
+  expect(kept.title).toBe('Updated')
+  expect(kept.notes).toBe('keep edited')
+  const again = await (
+    await handle(request({ action: 'bulk-capture', text }))
+  ).json()
+  expect(again.counts).toEqual({
+    saved: 0,
+    duplicate: 3,
+    invalid: 1,
+    failed: 0,
+  })
+  for (const text of [
+    '',
+    Array.from({ length: 101 }, () => 'https://example.org/limit').join('\n'),
+    'x'.repeat(20001),
+  ]) {
+    expect(
+      (await handle(request({ action: 'bulk-capture', text }))).status,
+    ).toBe(400)
+  }
+})
 it('rejects expired sessions and revokes logout sessions', async () => {
   const [session] = await db.select().from(schema.ownerSessions)
   await db

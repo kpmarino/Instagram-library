@@ -1,13 +1,13 @@
 # Instagram Library
 
-Personal saved-content archive built with TanStack Start, React, TypeScript and PostgreSQL/pgvector. The app supports private owner login, duplicate-safe URL capture, browsing, substring search and title/notes editing. PWA, imports, media backup and AI remain planned.
+Personal saved-content archive built with TanStack Start, React, TypeScript and PostgreSQL/pgvector. The app supports private owner login, duplicate-safe single/bulk URL capture, browsing, substring search and title/notes editing. PWA, imports, media backup and AI remain planned.
 
 ## Quick Start
 
 Use Node 24 (`.nvmrc`). Run from the separate implementation checkout:
 
 ```bash
-cd /Users/KevinM/Projects/instagram-library/.worktrees/library-ui
+cd /Users/KevinM/Projects/instagram-library/.worktrees/bulk-links
 npm ci
 npm run local:setup
 npm run auth:setup
@@ -40,7 +40,7 @@ npm run smoke:local
 
 ## Repository Status
 
-Foundation PR #1 is merged on GitHub. UI/session work uses `codex/library-ui`, based on `codex/local-testing` in a separate worktree with sandboxing enabled. Production deployment remains deferred. Cloud chats remain historical sources; this repository holds the consolidated implementation and planning.
+Foundation PR #1 is merged on GitHub. UI/session work uses `codex/bulk-links`, based on `codex/library-ui` in a separate worktree with sandboxing enabled. Production deployment remains deferred. Cloud chats remain historical sources; this repository holds the consolidated implementation and planning.
 
 ## Ownership and License
 

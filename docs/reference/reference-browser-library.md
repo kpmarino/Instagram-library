@@ -28,3 +28,11 @@ Opaque 256-bit tokens live in an HttpOnly, SameSite=Strict cookie. Only token di
 ## Limits
 
 Single owner; no roles, public sharing, password reset UI or token manager. No PWA caching, import, tags/collections UI, media backup or AI enrichment. Production proxy/origin handling, a shared rate limiter, TLS and backup operations need separate verification before deployment.
+
+## Bulk Capture
+
+Authenticated `POST /api/library` accepts `{action: "bulk-capture", text: "..."}` under the same session and Origin checks. Text is bounded to 20,000 characters and 1–100 nonblank lines. The existing 32 KiB streamed request limit also applies. Unsupported batch structure returns 400 before any writes. Individual invalid URLs are skipped while valid entries are processed.
+
+Supported line formats are a plain HTTP(S) URL, a URL preceded by a bullet (`-`, `*`, `•`) or number (`1.` or `1)`), a complete Markdown link, or an angle-bracket URL. Each line must contain exactly one URL without embedded whitespace or credentials. Markdown labels are ignored. Arbitrary prose/JSON/CSV/code fences are not interpreted as instructions or metadata.
+
+Returns 200 with `results` (line number, URL, status and optional error) and `counts` (saved, duplicate, invalid, failed). Persistence failures are isolated to their entry, with generic error text. Successful entries commit independently; no all-or-nothing batch transaction exists. Re-imports use the existing canonical URL conflict handling and preserve metadata. No schema migration is needed.

@@ -16,6 +16,7 @@ const pool = new Pool({
 })
 const db = drizzle(pool)
 const canonicalUrl = `https://example.org/library-smoke/${randomUUID()}`
+const bulkUrl = `https://example.org/library-bulk-smoke/${randomUUID()}`
 let server: ReturnType<typeof spawn> | undefined
 let serverExited: Promise<void> | undefined
 let sessionHash: string | undefined
@@ -159,6 +160,32 @@ try {
   )
   assert.equal(edited.rows[0].notes, 'Edited smoke notes')
   assert.equal(edited.rows[0].title, 'Edited smoke title')
+  const bulk = await library({
+    action: 'bulk-capture',
+    text: `${canonicalUrl}\n- ${bulkUrl}\n[Duplicate](${bulkUrl})\ninvalid`,
+  })
+  assert.equal(bulk.status, 200)
+  assert.deepEqual((await bulk.json()).counts, {
+    saved: 1,
+    duplicate: 2,
+    invalid: 1,
+    failed: 0,
+  })
+  const retried = await library({ action: 'bulk-capture', text: bulkUrl })
+  assert.deepEqual((await retried.json()).counts, {
+    saved: 0,
+    duplicate: 1,
+    invalid: 0,
+    failed: 0,
+  })
+  const preserved = await pool.query(
+    'SELECT notes FROM saved_items WHERE id = $1',
+    [created.item.id],
+  )
+  assert.equal(preserved.rows[0].notes, 'Edited smoke notes')
+  console.log(
+    'Live bulk capture, mixed results, duplicate preservation and safe retry verified.',
+  )
   assert.equal((await library({ action: 'logout' })).status, 200)
   assert.equal((await library()).status, 401)
   console.log(
@@ -175,9 +202,10 @@ try {
       await pool.query('DELETE FROM owner_sessions WHERE token_hash = $1', [
         sessionHash,
       ])
-    await pool.query('DELETE FROM saved_items WHERE canonical_url = $1', [
-      canonicalUrl,
-    ])
+    await pool.query(
+      'DELETE FROM saved_items WHERE canonical_url IN ($1, $2)',
+      [canonicalUrl, bulkUrl],
+    )
   } finally {
     await pool.end()
   }
