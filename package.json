@@ -1,0 +1,58 @@
+{
+  "name": "instagram-library",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "docs:lint": "markdownlint \"**/*.md\" \".cursor/rules/*.mdc\" --ignore node_modules --ignore dist --dot",
+    "docs:links": "node scripts/check-doc-links.mjs",
+    "docs:check": "npm run docs:lint && npm run docs:links"
+  },
+  "dependencies": {
+    "@tanstack/react-router": "^1.170.41",
+    "@tanstack/react-start": "^1.168.60",
+    "drizzle-orm": "^0.45.4",
+    "pg": "^8.23.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "@electric-sql/pglite-pgvector": "^0.0.9",
+    "@types/node": "^26.6.4",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "drizzle-kit": "^0.31.11",
+    "markdownlint-cli": "^0.49.1",
+    "prettier": "^3.9.9",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.3"
+  },
+  "overrides": {
+    "@esbuild-kit/core-utils": {
+      "esbuild": "^0.25.12"
+    },
+    "markdownlint-cli": {
+      "js-yaml": "^5.4.3",
+      "smol-toml": "^1.9.0"
+    },
+    "micromark-extension-math": {
+      "katex": "^0.18.2"
+    }
+  }
+}

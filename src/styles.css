@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #fff;
+  color: #17212b;
+  font:
+    18px/1.6 system-ui,
+    sans-serif;
+}
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 64px 32px;
+}
+h1 {
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.15;
+}
+h2 {
+  font-size: 24px;
+}
+section {
+  margin-top: 48px;
+  border-top: 1px solid #d6dce3;
+  padding-top: 24px;
+}
+@media (max-width: 600px) {
+  main {
+    padding: 32px 20px;
+  }
+}
