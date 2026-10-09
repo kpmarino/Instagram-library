@@ -1,22 +1,23 @@
 # Instagram Library
 
-Personal saved-content archive built with TanStack Start, React, TypeScript and PostgreSQL/pgvector. The foundation supports authenticated URL capture; full browsing, PWA, import, media backup and search remain planned.
+Personal saved-content archive built with TanStack Start, React, TypeScript and PostgreSQL/pgvector. The app supports private owner login, duplicate-safe URL capture, browsing, substring search and title/notes editing. PWA, imports, media backup and AI remain planned.
 
 ## Quick Start
 
 Use Node 24 (`.nvmrc`). Run from the separate implementation checkout:
 
 ```bash
-cd /Users/KevinM/Projects/instagram-library/.worktrees/tanstack-foundation
+cd /Users/KevinM/Projects/instagram-library/.worktrees/library-ui
 npm ci
-cp .env.example .env
-# Replace the example ingestion token with a long random value.
-docker compose up -d
-node --env-file=.env --import tsx scripts/migrate.ts
+npm run local:setup
+npm run auth:setup
+npm run db:up
+npm run db:migrate
+npm run smoke:local
 npm run dev
 ```
 
-Open `http://127.0.0.1:3000`. See [Development Setup](docs/how-to/how-to-setup-development.md) for environment and database details.
+Open `http://127.0.0.1:3000`. Read `.local-login` locally for the owner password. See [Use the Library](docs/how-to/how-to-use-library.md). See [Development Setup](docs/how-to/how-to-setup-development.md) for environment and database details.
 
 ## Documentation
 
@@ -34,11 +35,12 @@ npm run typecheck
 npm run build
 npm run format:check
 npm run docs:check
+npm run smoke:local
 ```
 
 ## Repository Status
 
-Foundation commit: `e045ece` on `codex/tanstack-foundation`. Development uses a separate worktree with sandboxing enabled. GitHub and production deployment are deferred. Cloud chats remain historical sources; this repository holds the consolidated implementation and planning.
+Foundation PR #1 is merged on GitHub. UI/session work uses `codex/library-ui`, based on `codex/local-testing` in a separate worktree with sandboxing enabled. Production deployment remains deferred. Cloud chats remain historical sources; this repository holds the consolidated implementation and planning.
 
 ## Ownership and License
 

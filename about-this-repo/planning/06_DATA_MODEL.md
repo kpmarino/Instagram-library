@@ -36,3 +36,7 @@ Versioned Drizzle SQL enables pgvector. No embedding dimension is selected yet. 
 ## Related Documents
 
 [Architecture](../../docs/explanations/explanation-architecture.md).
+
+## Owner Sessions
+
+Migration 0001 adds owner_sessions with a hashed opaque token primary key, expiry and creation date. It is single-owner authentication; there is no ownership column or multiuser model.

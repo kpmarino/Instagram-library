@@ -5,3 +5,6 @@ dist
 src/routeTree.gen.ts
 src/db/migrations
 package-lock.json
+.local-tools
+
+.local-login

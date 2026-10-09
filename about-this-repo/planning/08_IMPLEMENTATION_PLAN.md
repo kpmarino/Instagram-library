@@ -3,7 +3,7 @@
 **Project:** Instagram Library
 **Owner:** Kevin
 **Status:** Draft
-**Last Updated:** 2026-10-08
+**Last Updated:** 2026-10-09
 
 ## Executive Summary
 
@@ -18,7 +18,7 @@ Separate Git worktrees, sandboxed development, local commits. Use concrete accep
 | Phase | Work                                          | Exit Criteria                                          | Status                |
 | ----- | --------------------------------------------- | ------------------------------------------------------ | --------------------- |
 | 0     | TanStack/schema/API foundation                | Tests, type check, build and schema verification       | Complete at `e045ece` |
-| 1     | Documentation and cloud-context consolidation | Filled planning docs, links and lint valid             | Current task          |
+| 1     | Documentation and cloud-context consolidation | Filled planning docs, links and lint valid             | Complete in PR #1     |
 | 2     | Real database/runtime and session auth        | Container smoke, private sessions, token lifecycle     | Planned               |
 | 3     | Tablet library/detail/capture                 | Save, browse, annotate and find on iPad/desktop        | Planned               |
 | 4     | PWA, Shortcut and export import               | Device capture and duplicate-safe import verified      | Planned               |
@@ -68,3 +68,11 @@ Mark new product proposals as draft until accepted. Record scope changes before 
 ## Appendix
 
 [Requirements](02_PRODUCT_REQUIREMENTS.md).
+
+## Local Verification and CI Slice
+
+The next authorized slice adds real-container/API smoke testing, repeatable private local setup and GitHub CI. Owner session auth and the responsive save/browse/edit workflow are now implemented on codex/library-ui for review. Physical-device testing remains pending. GitHub is connected and PR #1 is merged; production deployment is still out of scope.
+
+## Browser Workflow Slice
+
+The continued-build request authorizes owner login, capture, browse, literal substring search and title/notes editing, using shadcn/ui as the default component system. Local runtime and UI work remain reviewable in separate stacked branches. Token-management UI, offline PWA, imports, media and AI remain outside this slice.
