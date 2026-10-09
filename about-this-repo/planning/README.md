@@ -26,3 +26,5 @@ Planning records intent and decisions; technical references record implemented b
 - [Cloud Context Reconciliation](discussions/cloud-context-reconciliation.md)
 
 `ADR_TEMPLATE.md` is intentionally retained as a reusable template. Draft plans do not grant authority to deploy, configure providers or send messages.
+
+- [Owner Sessions and shadcn/ui](ADR-005-owner-session-and-shadcn.md) — implementation decision; pending human review.

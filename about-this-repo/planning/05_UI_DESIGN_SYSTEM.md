@@ -3,11 +3,11 @@
 **Project:** Instagram Library
 **Owner:** Kevin
 **Status:** Draft
-**Last Updated:** 2026-10-08
+**Last Updated:** 2026-10-09
 
 ## Design Philosophy
 
-Readable, accessible and efficient on iPad Mini, iPad and desktop. The owner has not approved a visual design or palette.
+Readable, accessible and efficient on iPad Mini, iPad and desktop. The owner explicitly selected shadcn/ui as the default component style guide. Detailed layout is implemented and pending human review.
 
 ## Design Brief
 
@@ -15,15 +15,15 @@ Prioritize finding saved material and annotating it; avoid inventing dashboards 
 
 ## App Shell and Layout
 
-Current shell uses system typography, a white background and a 960px maximum content width. These are scaffold choices, not binding product design decisions. Validate keyboard behavior and touch targets during UI implementation.
+Current library uses official shadcn/ui Base UI Nova, neutral semantic colors, white background, Geist typography and a 1152px maximum outer width. Validate keyboard behavior and touch targets during UI implementation.
 
 ## Color and Typography
 
-No final tokens are selected. Maintain legible contrast and responsive text. Respect reduced-motion preferences if motion is introduced.
+Use the standard preset tokens in src/styles.css. Maintain legible contrast and responsive text. Respect reduced-motion preferences if motion is introduced.
 
 ## Components
 
-Planned: search field, URL capture form, item list/grid, metadata editor, collection/tag selectors and archive status. Do not implement these until the UI task is scoped.
+Implemented: owner login, search field, URL capture dialog, responsive list/table and title/notes editor. Tags/collections, archive retrieval and broader metadata controls remain planned.
 
 ## Related Documents
 

@@ -29,3 +29,6 @@ These documents describe the current implementation. Future intent lives in [Pla
 
 - [Project Documentation Standards](standards/documentation-standards.md)
 - [Codex Context](codex-context.md)
+
+- [Use the Local Library](how-to/how-to-use-library.md)
+- [Browser Library Reference](reference/reference-browser-library.md)

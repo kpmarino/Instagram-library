@@ -71,4 +71,8 @@ Mark new product proposals as draft until accepted. Record scope changes before 
 
 ## Local Verification and CI Slice
 
-The next authorized slice adds real-container/API smoke testing, repeatable private local setup and GitHub CI. Session auth and the tablet product workflow remain separate planned work. GitHub is connected and PR #1 is merged; production deployment is still out of scope.
+The next authorized slice adds real-container/API smoke testing, repeatable private local setup and GitHub CI. Owner session auth and the responsive save/browse/edit workflow are now implemented on codex/library-ui for review. Physical-device testing remains pending. GitHub is connected and PR #1 is merged; production deployment is still out of scope.
+
+## Browser Workflow Slice
+
+The continued-build request authorizes owner login, capture, browse, literal substring search and title/notes editing, using shadcn/ui as the default component system. Local runtime and UI work remain reviewable in separate stacked branches. Token-management UI, offline PWA, imports, media and AI remain outside this slice.

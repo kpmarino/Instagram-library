@@ -24,4 +24,4 @@ The service inserts with conflict-do-nothing on canonical URL, then reads an exi
 
 ## Limitations
 
-No ownership/session/token tables, worker queue, full-text index or embedding dimension. Asset metadata does not prove that a storage object exists or that its hash has been verified by a worker.
+The owner_sessions table stores session digests, expiry and creation timestamps. Migration 0001 adds it. No multiuser ownership/capture-token tables, worker queue, full-text index or embedding dimension. Asset metadata does not prove that a storage object exists or that its hash has been verified by a worker.
