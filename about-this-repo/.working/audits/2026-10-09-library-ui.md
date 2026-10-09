@@ -31,3 +31,7 @@ Allowed screen copy: Personal Library, Saved links, Sign out, Add link, Search s
 ## Remaining Boundaries
 
 Single owner; a process-local login limiter. Production TLS/proxy/origin handling, shared throttling, backup/restore and provider selection remain separate work. No PWA, import, tags/collections editor, media retrieval, AI or semantic search.
+
+## Dependency Audit
+
+The CLI installed shadcn as a runtime dependency; it has been moved to development dependencies because it supplies scaffolding and build-time CSS. Production dependency audit reports zero vulnerabilities. The development CLI tree currently reports seven high-severity transitive glob-parser advisories with no compatible upstream fix reported by npm. These packages are absent from the runtime dependency tree and are not bundled into the client; no forced CLI downgrade was applied. Recheck upstream before processing untrusted registry/glob inputs.
