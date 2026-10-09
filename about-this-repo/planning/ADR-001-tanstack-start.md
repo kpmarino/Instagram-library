@@ -1,6 +1,11 @@
-# ADR 001: TanStack Start
+# ADR-001: TanStack Start
 
-Status: accepted.
+**Project:** Instagram Library
+**Owner:** Kevin
+**Status:** Draft
+**Last Updated:** 2026-10-08
+
+Decision adopted in foundation; this document records it for review.
 
 Use TanStack Start, React, TypeScript and Vite for this personal learning project. Router conventions, SSR and server routes keep the shell and external capture API in one application. Keep validation and services outside routes so a framework migration does not require rewriting the domain. Avoid experimental RSC. Add TanStack Query when a concrete server-state workflow warrants it.
 

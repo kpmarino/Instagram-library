@@ -1,4 +1,4 @@
-# Architecture
+# Library Architecture
 
 ## Initial foundation
 
@@ -28,24 +28,3 @@ The initial deployment model is single user. A server-side ingestion token gates
 `Tag` and `Collection` have many-to-many joins to items. `ItemMetadata` contains a JSONB value, key, timestamp and provenance (`user`, `imported`, `instagram`, `ai`). Enrichment should add provenance-bearing metadata and must not silently overwrite user fields. Foreign keys cascade item-owned records; deleting a database row does not delete archived objects. Object cleanup requires an explicit future policy.
 
 pgvector is enabled by the initial migration. No model-specific embedding dimension is frozen before selecting an enrichment provider. Semantic indexes and full-text search arrive with search implementation.
-
-## Follow-up sequence
-
-1. Real PostgreSQL container smoke test and production runtime/provider decision.
-2. Session login, token management and app-internal server functions sharing the domain service.
-3. iPad Mini -> iPad -> desktop library, detail and capture workflows; iPhone as capture interface.
-4. PWA install/offline policy and authenticated Apple Shortcut capture.
-5. Instagram export import, tags/collections editing, custom metadata and full-text search.
-6. Durable media archive queue, S3 adapter, checksums, removed-content handling and complete JSON export.
-7. Optional enrichment, OCR/transcription and semantic search.
-
-## Decisions
-
-- [ADR 001: TanStack Start](001-tanstack-start.md)
-- [ADR 002: Source-independent saved items](002-saved-item.md)
-- [ADR 003: Media outside PostgreSQL](003-media-storage.md)
-- [ADR 004: Versioned capture API](004-capture-api.md)
-
-## Sources
-
-Framework setup follows the [TanStack build-from-scratch guide](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) and [server-route conventions](https://tanstack.com/start/latest/docs/framework/react/guide/server-routes). Persistence uses [Drizzle PostgreSQL support](https://orm.drizzle.team/docs/get-started-postgresql). Dependencies are pinned by `package-lock.json`.

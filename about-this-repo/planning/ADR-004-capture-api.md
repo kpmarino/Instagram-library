@@ -1,6 +1,11 @@
-# ADR 004: Versioned capture API
+# ADR-004: Versioned capture API
 
-Status: accepted.
+**Project:** Instagram Library
+**Owner:** Kevin
+**Status:** Draft
+**Last Updated:** 2026-10-08
+
+Decision adopted in foundation; this document records it for review.
 
 Expose `POST /api/v1/items` for external ingestion, including a future Apple Shortcut. Use a server-only bearer token in this single-user foundation; full token lifecycle and session login come later. API token authentication is intentionally distinct from future Instagram authorization.
 

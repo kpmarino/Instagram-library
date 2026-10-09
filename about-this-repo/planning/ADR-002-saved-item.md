@@ -1,6 +1,11 @@
-# ADR 002: Source-independent SavedItem
+# ADR-002: Source-independent SavedItem
 
-Status: accepted.
+**Project:** Instagram Library
+**Owner:** Kevin
+**Status:** Draft
+**Last Updated:** 2026-10-08
+
+Decision adopted in foundation; this document records it for review.
 
 Use `SavedItem` with source, original URL and canonical URL, rather than `InstagramPost`. Recognize Instagram post/reel/tv shortcodes locally and remove their sharing parameters. Preserve query parameters for generic URLs because they can identify distinct resources; remove fragments.
 

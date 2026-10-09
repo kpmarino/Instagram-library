@@ -1,6 +1,11 @@
-# ADR 003: Media outside PostgreSQL
+# ADR-003: Media outside PostgreSQL
 
-Status: accepted.
+**Project:** Instagram Library
+**Owner:** Kevin
+**Status:** Draft
+**Last Updated:** 2026-10-08
+
+Decision adopted in foundation; this document records it for review.
 
 Keep binaries in S3-compatible object storage and relational metadata in Postgres. Store bucket/key, checksum, size, MIME type, role and carousel position on `ArchivedAsset`. Avoid persisting expiring signed URLs as object identity.
 

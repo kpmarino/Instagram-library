@@ -1,0 +1,162 @@
+---
+description: "Apply ASG documentation standards when writing, reviewing, or editing
+  documentation — markdown files, README files, planning documents (Shape Up), or
+  Diataxis technical documentation (tutorials, how-tos, explanations, references,
+  runbooks). Covers naming conventions, markdown formatting rules, and git commit
+  format. Do NOT apply during code generation tasks."
+alwaysApply: false
+---
+
+# ASG Documentation Standards
+
+## Documentation hub reference
+
+Keep your organization’s **documentation-hub** clone available (local path or Git
+remote). Set **`$hub`** (PowerShell) to that repository root when copying templates.
+From there open `templates/planning/`, `templates/diataxis/`, `docs/standards/`, and
+`implementation/ai-rules/prompts/documentation-prompts.md` when writing or reviewing
+documentation in this project.
+
+## Repository layout (ASG scaffold)
+
+- **Technical docs (Diataxis):** under **`docs/`** using **required subfolders** (see
+  below). Do not place user-facing technical docs at repo root or under ad-hoc paths
+  such as **`implementation/guides/`**.
+- **Planning (Shape Up):** under **`about-this-repo/planning/`** (numbered docs and
+  ADRs).
+- **Working notes:** **`about-this-repo/.working/sessions/`** and
+  **`about-this-repo/.working/audits/`** for drafts, sessions, and audits — not a
+  substitute for **`docs/`**.
+
+### Required `docs/` folders (mandatory)
+
+Create and keep these directories so exports (for example SharePoint) preserve a
+high-level Diataxis structure:
+
+| Folder | Diataxis type | File naming |
+| ------ | ------------- | ----------- |
+| **`docs/tutorials/`** | Tutorial | `tutorial-[topic].md` |
+| **`docs/how-to/`** | How-to | `how-to-[task].md` |
+| **`docs/explanations/`** | Explanation | `explanation-[concept].md` |
+| **`docs/reference/`** | Reference | `reference-[subject].md` |
+| **`docs/runbooks/`** | Runbook | `runbook-[topic].md` |
+| **`docs/standards/`** | Standards (org/project rules) | descriptive kebab or UPPERCASE names |
+
+Add a **`docs/README.md`** index when the project has more than a few technical docs.
+**documentation-hub** dogfoods this layout; see **`$hub/docs/`**.
+
+Cursor Agent Skills for the same workflow live under **`.agents/skills/`** per
+[Agent Skills](https://cursor.com/docs/skills).
+
+## Planning template catalog (documentation-hub)
+
+Source files live under **`$hub/templates/planning/`**. **`asg-docs init`** (without
+**`--no-planning`**) copies the full set into **`about-this-repo/planning/`** using
+the names below. Create ADRs by copying **`ADR_TEMPLATE.md`** to
+**`ADR-NNN-short-title.md`**.
+
+| # | Installed file | Hub template |
+|---|----------------|--------------|
+| 01 | `about-this-repo/planning/01_PROBLEM_GOALS.md` | `01_PROBLEM_GOALS_TEMPLATE.md` |
+| 02 | `about-this-repo/planning/02_PRODUCT_REQUIREMENTS.md` | `02_PRODUCT_REQUIREMENTS_TEMPLATE.md` |
+| 03 | `about-this-repo/planning/03_USER_FLOWS.md` | `03_USER_FLOWS_TEMPLATE.md` |
+| 04 | `about-this-repo/planning/04_WIREFRAMES.md` | `04_WIREFRAMES_TEMPLATE.md` |
+| 05 | `about-this-repo/planning/05_UI_DESIGN_SYSTEM.md` | `05_UI_DESIGN_SYSTEM_TEMPLATE.md` |
+| 06 | `about-this-repo/planning/06_DATA_MODEL.md` | `06_DATA_MODEL_TEMPLATE.md` |
+| 07 | `about-this-repo/planning/07_TECH_SPECIFICATIONS.md` | `07_TECH_SPECIFICATIONS_TEMPLATE.md` |
+| 08 | `about-this-repo/planning/08_IMPLEMENTATION_PLAN.md` | `08_IMPLEMENTATION_PLAN_TEMPLATE.md` |
+| 09 | `about-this-repo/planning/09_API_DESIGN.md` | `09_API_DESIGN_TEMPLATE.md` |
+| 10 | `about-this-repo/planning/10_SECURITY_AUTH_DESIGN.md` | `10_SECURITY_AUTH_DESIGN_TEMPLATE.md` |
+| 11 | `about-this-repo/planning/11_MIGRATION_STRATEGY.md` | `11_MIGRATION_STRATEGY_TEMPLATE.md` |
+| 12 | `about-this-repo/planning/12_CAPABILITY_INVENTORY.md` | `12_CAPABILITY_INVENTORY_TEMPLATE.md` |
+| ADR | `about-this-repo/planning/ADR_TEMPLATE.md` | `ADR_TEMPLATE.md` |
+
+## Documentation type decision tree
+
+**Planning docs (Shape Up) — use when deciding what to build:**
+
+| Question | Document |
+|----------|----------|
+| "Why are we building this?" | `about-this-repo/planning/01_PROBLEM_GOALS.md` |
+| "What are we building?" | `about-this-repo/planning/02_PRODUCT_REQUIREMENTS.md` |
+| "How will users interact?" | `about-this-repo/planning/03_USER_FLOWS.md` |
+| "What do screens look like?" | `about-this-repo/planning/04_WIREFRAMES.md` |
+| "What are the design rules?" | `about-this-repo/planning/05_UI_DESIGN_SYSTEM.md` |
+| "What is the data structure?" | `about-this-repo/planning/06_DATA_MODEL.md` |
+| "How should we build it?" | `about-this-repo/planning/07_TECH_SPECIFICATIONS.md` |
+| "When will we build it?" | `about-this-repo/planning/08_IMPLEMENTATION_PLAN.md` |
+| "Why did we choose this?" | `about-this-repo/planning/ADR-NNN-title.md` |
+
+**Diataxis docs — use when documenting what was built:**
+
+| User need | Document type | File naming |
+|-----------|--------------|-------------|
+| "How do I learn this?" (new user) | Tutorial | `docs/tutorials/tutorial-[topic].md` |
+| "How do I do [task]?" | How-to | `docs/how-to/how-to-[task].md` |
+| "Why does it work this way?" | Explanation | `docs/explanations/explanation-[concept].md` |
+| "What are the exact specs?" | Reference | `docs/reference/reference-[subject].md` |
+| "System is broken, fix it" | Runbook | `docs/runbooks/runbook.md` |
+
+## Naming conventions
+
+Planning docs: numbered prefix under **`about-this-repo/planning/`** —
+`07_TECH_SPECIFICATIONS.md`
+
+Diataxis docs: kebab-case with type prefix — `how-to-deploy-production.md`
+
+Root files: UPPERCASE — `README.md`, `CHANGELOG.md`, `RUNBOOK.md`, `SBOM.md`
+
+## Changelog tracking policy (hybrid and on-demand)
+
+- Do not require `CHANGELOG.md` for every scaffolded project.
+- For internal projects, use strong commit messages plus
+  `about-this-repo/.working/sessions/` for significant narrative context.
+- Use formal `CHANGELOG.md` when publishing packages/libraries, managing public API
+  releases, or when compliance requires release history.
+- Changelog writing is on-demand only. Use `asg-docs changelog` or explicitly invoke
+  the `changelog-writer` skill.
+
+## Markdown rules (enforce without exception)
+
+MD031 — blank line before AND after every code fence
+
+MD032 — blank line before AND after every list (most commonly violated in AI output)
+
+MD036 — never use `**bold text**` as a heading substitute; use `## Heading` instead
+
+MD040 — every code block must specify a language: `bash`, `powershell`, `json`,
+`yaml`, `typescript`, `javascript`, `python`, `php`, `sql`, `html`, `css`, `text`
+
+Also enforce: no trailing whitespace, no hard tabs, max one consecutive blank line,
+single newline at end of file.
+
+## Project-specific context
+
+Add project-specific context below this line when deploying to a project:
+
+Project: Instagram Library
+Stack: TanStack Start, React, TypeScript, PostgreSQL/pgvector, Drizzle
+
+## Git commit format
+
+```text
+docs: [brief description]
+
+Source: [AI | Developer | AI + Developer]
+Review status: Pending human review
+AI Engine(s): [Cursor | if applicable]
+
+[Optional detail]
+```
+
+## Quality checklist — run before completing any documentation task
+
+- Correct document type selected (planning vs technical, correct Diataxis type)
+- Metadata header present in planning docs (Project, Owner, Status, Last Updated)
+- All required sections from the template are present
+- All code blocks have a language specified
+- Blank lines around all headings, lists, and code fences
+- No markdownlint violations
+- File named correctly for its type
+- **`about-this-repo/`** context consulted when changing repository meta-docs or layout
+- Links and cross-references are valid
