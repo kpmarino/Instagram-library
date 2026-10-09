@@ -19,21 +19,22 @@ Routes -> domain validation -> ingestion service -> Drizzle/PostgreSQL. Asset me
 
 ## Capability Catalog
 
-| Capability                           | State             | Evidence                          |
-| ------------------------------------ | ----------------- | --------------------------------- |
-| SSR library shell                    | Implemented       | `src/routes/index.tsx`            |
-| Strict URL capture                   | Implemented       | `src/domain/items/ingestion.ts`   |
-| Bearer HTTP endpoint                 | Implemented       | `src/routes/api.v1.items.ts`      |
-| Race-safe duplicate saves            | Implemented       | Service and persistence tests     |
-| Tags/collections/custom metadata     | Schema only       | `src/db/schema/index.ts`          |
-| Assets/checksum/archive statuses     | Schema only       | Migration and schema              |
-| pgvector                             | Extension enabled | Migration integration test        |
-| Private browse/edit/substring search | Implemented       | Browser library and session tests |
-| PWA/Shortcut/import/export           | Planned           | Requirements                      |
-| Media workers/S3 operations          | Planned           | No retrieval code                 |
-| Owner login/session/logout           | Implemented       | Session migration and HTTP tests  |
-| Capture token management UI          | Planned           | Environment bearer token only     |
-| AI/OCR/transcription/embeddings      | Deferred          | No provider calls                 |
+| Capability                           | State             | Evidence                              |
+| ------------------------------------ | ----------------- | ------------------------------------- |
+| SSR library shell                    | Implemented       | `src/routes/index.tsx`                |
+| Bulk URL paste                       | Implemented       | Bulk parser/service and session tests |
+| Strict URL capture                   | Implemented       | `src/domain/items/ingestion.ts`       |
+| Bearer HTTP endpoint                 | Implemented       | `src/routes/api.v1.items.ts`          |
+| Race-safe duplicate saves            | Implemented       | Service and persistence tests         |
+| Tags/collections/custom metadata     | Schema only       | `src/db/schema/index.ts`              |
+| Assets/checksum/archive statuses     | Schema only       | Migration and schema                  |
+| pgvector                             | Extension enabled | Migration integration test            |
+| Private browse/edit/substring search | Implemented       | Browser library and session tests     |
+| PWA/Shortcut/import/export           | Planned           | Requirements                          |
+| Media workers/S3 operations          | Planned           | No retrieval code                     |
+| Owner login/session/logout           | Implemented       | Session migration and HTTP tests      |
+| Capture token management UI          | Planned           | Environment bearer token only         |
+| AI/OCR/transcription/embeddings      | Deferred          | No provider calls                     |
 
 ## Data Dependencies
 

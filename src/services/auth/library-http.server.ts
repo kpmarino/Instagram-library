@@ -6,6 +6,8 @@ import type { getDb } from '../../db/client.server'
 import { verifyPassword } from './password.server'
 import { saveItem } from '../ingestion/save-item'
 import { listItems, editItem } from '../library/items.server'
+import { bulkSave } from '../ingestion/bulk-save'
+import { parseBulkLinks } from '../../domain/items/bulk'
 
 const COOKIE = 'library_session'
 const SESSION_SECONDS = 7 * 24 * 60 * 60
@@ -139,6 +141,22 @@ export async function handleLibrary(
     if (body.action === 'capture') {
       const result = await saveItem(database, body.input)
       return json({ created: result.created }, result.created ? 201 : 200)
+    }
+    if (body.action === 'bulk-capture') {
+      try {
+        parseBulkLinks(body.text)
+      } catch {
+        return json(
+          {
+            error:
+              'Paste 1–100 links, one per line, using no more than 20,000 characters.',
+          },
+          400,
+        )
+      }
+      return json(
+        await bulkSave(body.text, (input) => saveItem(database, input)),
+      )
     }
     if (body.action === 'edit') {
       const item = await editItem(database, body.input)

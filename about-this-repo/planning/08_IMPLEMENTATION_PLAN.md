@@ -76,3 +76,7 @@ The next authorized slice adds real-container/API smoke testing, repeatable priv
 ## Browser Workflow Slice
 
 The continued-build request authorizes owner login, capture, browse, literal substring search and title/notes editing, using shadcn/ui as the default component system. Local runtime and UI work remain reviewable in separate stacked branches. Token-management UI, offline PWA, imports, media and AI remain outside this slice.
+
+## Bulk Paste Scope
+
+Kevin explicitly requested bulk link addition to use URLs extracted with an external AI tool. Implement paste-only batches, bounded input, per-entry outcomes and duplicate-safe retries within the existing private library. External AI integration, source scraping, metadata extraction, export-file import and media retrieval are not part of this request. Implementation is pending human review.

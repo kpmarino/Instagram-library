@@ -19,6 +19,7 @@ import {
   TableCell,
 } from '@/components/ui/table'
 import { Login } from './login'
+import { BulkDialog } from './bulk-dialog'
 import { LinkDialog, type LinkItem } from './link-dialog'
 import { ApiError, libraryRequest } from './api'
 export function LibraryPage() {
@@ -33,10 +34,12 @@ export function LibraryPage() {
   const [revision, setRevision] = useState(0)
   const [dialog, setDialog] = useState<LinkItem | null | undefined>(undefined)
   const [signingOut, setSigningOut] = useState(false)
+  const [bulkOpen, setBulkOpen] = useState(false)
   function expire() {
     setAuthenticated(false)
     setItems([])
     setDialog(undefined)
+    setBulkOpen(false)
     setNotice('')
     setError('')
   }
@@ -142,16 +145,29 @@ export function LibraryPage() {
             >
               Saved links
             </h1>
-            <Button
-              size="lg"
-              disabled={!authenticated}
-              onClick={() => {
-                setNotice('')
-                setDialog(null)
-              }}
-            >
-              Add link
-            </Button>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Button
+                variant="outline"
+                size="lg"
+                disabled={!authenticated}
+                onClick={() => {
+                  setNotice('')
+                  setBulkOpen(true)
+                }}
+              >
+                Bulk add
+              </Button>
+              <Button
+                size="lg"
+                disabled={!authenticated}
+                onClick={() => {
+                  setNotice('')
+                  setDialog(null)
+                }}
+              >
+                Add link
+              </Button>
+            </div>
           </div>
           <Input
             aria-label="Search saved links"
@@ -304,6 +320,17 @@ export function LibraryPage() {
             </nav>
           )}
         </section>
+      )}
+      {bulkOpen && authenticated && (
+        <BulkDialog
+          onClose={() => setBulkOpen(false)}
+          onExpired={expire}
+          onImported={() => {
+            setQuery('')
+            setPage(0)
+            setRevision((r) => r + 1)
+          }}
+        />
       )}
       {dialog !== undefined && authenticated && (
         <LinkDialog
